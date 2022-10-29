@@ -1,0 +1,23 @@
+{
+  "http": {
+    "retry": 3,
+    "destination_folder": "/Users/rakeshsr/beam/download1",
+    "sleep_time": 3
+
+  },
+  "https": {
+    "retry": 3,
+    "destination_folder": "/Users/rakeshsr/beam/download1",
+    "sleep_time": 3
+  },
+  "ftp": {
+    "retry": 3,
+    "destination_folder": "/Users/rakeshsr/beam/download1",
+    "sleep_time": 3
+  },
+  "sftp": {
+    "retry": 3,
+    "destination_folder": "/Users/rakeshsr/beam/download1",
+    "sleep_time": 3
+  }
+}
