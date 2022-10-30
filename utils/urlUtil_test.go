@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestValiUrl(t *testing.T) {
+func TestValidUrl(t *testing.T) {
 	actual := ValidateUrl("http://www.google.com")
 	fmt.Print(actual)
 	expected := true
