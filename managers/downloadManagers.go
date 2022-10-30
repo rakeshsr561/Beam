@@ -7,7 +7,7 @@ import (
 )
 
 func DownLoadAll(urls []string, config entity.Config) {
-	urls = removeDuplicateUrls(urls)
+	urls = RemoveDuplicateUrls(urls)
 	downloaders := entity.BuildDownloadersFromUrlList(urls, config)
 	var wg sync.WaitGroup
 	for _, downloader := range downloaders {
@@ -23,7 +23,7 @@ func DownLoadAll(urls []string, config entity.Config) {
 
 }
 
-func removeDuplicateUrls(urls []string) []string {
+func RemoveDuplicateUrls(urls []string) []string {
 	keys := make(map[string]bool)
 	list := []string{}
 	for _, entry := range urls {
