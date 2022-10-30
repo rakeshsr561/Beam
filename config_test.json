@@ -1,0 +1,23 @@
+{
+  "http": {
+    "retry": 2,
+    "destination_folder": "http_folder",
+    "sleep_time": 20
+
+  },
+  "https": {
+    "retry": 3,
+    "destination_folder": "https_folder",
+    "sleep_time": 30
+  },
+  "ftp": {
+    "retry": 4,
+    "destination_folder": "ftp_folder",
+    "sleep_time": 40
+  },
+  "sftp": {
+    "retry": 5,
+    "destination_folder": "sftp_folder",
+    "sleep_time": 50
+  }
+}

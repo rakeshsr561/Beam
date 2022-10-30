@@ -1,0 +1,4 @@
+ftp://abc:21/folder/one.end_one##demo##password
+http://abc.com/folder/two.end_two
+https://abc.com/folder/three.end_three
+sftp://abc:21/folder/four.end_four##demo##password
