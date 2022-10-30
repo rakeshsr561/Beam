@@ -17,7 +17,7 @@ type Https struct {
 }
 
 func (hs Https) Download() error {
-	fmt.Println("hoi")
+
 	resp, err := http.Get(hs.Url)
 	if err != nil {
 		return err
@@ -34,8 +34,7 @@ func (hs Https) Download() error {
 
 	_, err = io.Copy(f, resp.Body)
 	f.Close()
-	//os.Rename(hs.Location+"/"+temp_file_name, hs.Location+"/"+hs.FileName)
-	fmt.Println("hello")
+
 	fmt.Println(hs.Location + "/" + hs.FileName)
 	fmt.Println(hs.FileName)
 	if err != nil {

@@ -2,10 +2,12 @@ package entity
 
 import (
 	"Beam/utils"
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/jlaffaye/ftp"
 	"io"
 	"log"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -22,7 +24,9 @@ type Sftp struct {
 }
 
 func (f Sftp) Download() error {
-	c, err := ftp.Dial(f.Url, ftp.DialWithTimeout(5*time.Second))
+	urlString, err := url.Parse(f.Url)
+	fmt.Println(urlString.Host)
+	c, err := ftp.Dial(urlString.Host, ftp.DialWithTimeout(1*time.Second))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,10 +35,12 @@ func (f Sftp) Download() error {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(utils.GetDirFromUrl(f.Url))
 	c.ChangeDir(utils.GetDirFromUrl(f.Url))
 
 	segments := strings.Split(f.Url, "/")
 	serverFileName := segments[len(segments)-1]
+	fmt.Println(serverFileName)
 
 	res, err := c.Retr(serverFileName)
 	if err != nil {

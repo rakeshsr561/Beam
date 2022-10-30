@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"Beam/utils"
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/jlaffaye/ftp"
 	"io"
@@ -13,25 +15,32 @@ import (
 
 type Ftp struct {
 	Url           string
+	Username      string
+	Password      string
 	RetryCount    int
 	SleepDuration int
 	Location      string
-	FileName      string
+
+	FileName string
 }
 
 func (f Ftp) Download() error {
+
 	urlString, _ := url.Parse(f.Url)
-	c, err := ftp.Dial(urlString.Host, ftp.DialWithTimeout(5*time.Second))
+
+	c, err := ftp.Dial(urlString.Host, ftp.DialWithTimeout(1*time.Second))
+	if err != nil {
+
+		log.Fatal(err)
+
+	}
+
+	err = c.Login(f.Username, f.Password)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = c.Login("", "")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	c.ChangeDir(urlString.Path)
+	c.ChangeDir(utils.GetDirFromUrl(f.Url))
 
 	segments := strings.Split(f.Url, "/")
 	serverFileName := segments[len(segments)-1]
@@ -43,6 +52,8 @@ func (f Ftp) Download() error {
 	defer res.Close()
 
 	temp_file_name := uuid.NewString()
+
+	fmt.Println(f.Location + "/" + temp_file_name)
 
 	outFile, err := os.Create(f.Location + "/" + temp_file_name)
 	if err != nil {
@@ -61,7 +72,7 @@ func (f Ftp) Download() error {
 		}
 		os.Rename(f.Location+"/"+temp_file_name, f.Location+"/"+f.FileName)
 	}
-
+	
 	if err != nil {
 		log.Fatal(err)
 	}

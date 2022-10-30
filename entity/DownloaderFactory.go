@@ -32,19 +32,30 @@ func create_file_name_from_url(url string) string {
 func BuildDownloadersFromUrlList(urls []string, config Config) []Downloader {
 	var downloaders []Downloader
 	for _, url := range urls {
-		urlArray := strings.Split(url, ",")
+		urlArray := strings.Split(url, "##")
+		var userName string
+		var password string
+		if len(urlArray) == 1 {
+			userName = ""
+			password = ""
+
+		} else {
+			userName = urlArray[1]
+			password = urlArray[2]
+		}
 		if !utils.ValidateUrl(urlArray[0]) {
 			continue
 		}
-		fileName := create_file_name_from_url(url)
+		fileName := create_file_name_from_url(strings.Split(url, "##")[0])
 		if strings.HasPrefix(url, "https") {
 			downloaders = append(downloaders, Https{url, config.Https.Retry, config.Https.SleepTIme, config.Https.DestinationFolder, fileName})
 		} else if strings.HasPrefix(url, "http") {
 			downloaders = append(downloaders, Http{url, config.Http.Retry, config.Http.SleepTIme, config.Http.DestinationFolder, fileName})
 		} else if strings.HasPrefix(url, "ftp") {
-			downloaders = append(downloaders, Ftp{url, config.Ftp.Retry, config.Ftp.SleepTIme, config.Ftp.DestinationFolder, fileName})
+			downloaders = append(downloaders, Ftp{urlArray[0], userName, password, config.Ftp.Retry, config.Ftp.SleepTIme, config.Ftp.DestinationFolder, fileName})
 		} else if strings.HasPrefix(url, "sftp") {
-			downloaders = append(downloaders, Sftp{url, "", "", config.Sftp.Retry, config.Sftp.SleepTIme, config.Sftp.DestinationFolder, fileName})
+			fmt.Println(urlArray[0])
+			downloaders = append(downloaders, Sftp{urlArray[0], userName, password, config.Sftp.Retry, config.Sftp.SleepTIme, config.Sftp.DestinationFolder, fileName})
 		}
 	}
 	return downloaders

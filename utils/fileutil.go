@@ -27,21 +27,6 @@ func ReadFileByLine(fileName string) []string {
 	return urls
 }
 
-func CreateFile(fileLocation string) error {
-	myfile, e := os.Create(fileLocation)
-	if e != nil {
-		return e
-	}
-	log.Println(myfile)
-	myfile.Close()
-	return e
-}
-
-func DeleteFile(fileLocation string) error {
-	e := os.Remove(fileLocation)
-	return e
-}
-
 func CreateFolderIfNotExists(path string) error {
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {

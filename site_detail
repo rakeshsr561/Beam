@@ -1,1 +1,4 @@
-https://reqbin.com/mvzj7dss
+ftp://test.rebex.net:21/pub/example/readme.txt##demo##password
+http://httpbin.org/get
+https://developers.google.com/speed/webp/gallery
+sftp://test.rebex.net:21/pub/example/readme.txt##demo##password
